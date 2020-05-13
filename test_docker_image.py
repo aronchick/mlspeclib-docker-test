@@ -15,17 +15,22 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(messag
 stdout_handler.setFormatter(formatter)
 rootLogger.addHandler(stdout_handler)
 
-for i in os.environ:
-    rootLogger.debug(f"{i}:\t{os.environ.get(i)}")
+# for i in os.environ:
+#     rootLogger.debug(f"{i}:\t{os.environ.get(i)}")
 
 parameters = {}
-parameters = YAML.safe_load(Path("env_variables.yaml").read_text('utf-8'))
+if os.environ.get('INPUT_test_environment_variables_override') is not None:
+    parameters = YAML.safe_load(os.environ.get('INPUT_test_environment_variables_override'))
+    rootLogger.debug(":: Loaded parameters from INPUT_test_environment_variables_override")
+else:
+    parameters = YAML.safe_load(Path("env_variables.yaml").read_text('utf-8'))
+    rootLogger.debug(":: Loaded parameters from file")
+
 parameters["INPUT_input_parameters"] = (
     Path(".parameters") / "input" / "datasource.yaml"
 ).read_text('utf-8')
 
 for param in parameters:
-    rootLogger.debug(f"{i}:\t{param}")
     if isinstance(parameters[param], dict):
         env_value = YAML.safe_dump(parameters[param])
     else:
@@ -52,5 +57,5 @@ for param in parameters:
     environment_vars += f' -e "{param}={env_value}"'
 
 exec_statement = f"docker run {environment_vars} aronchick/mlspeclib-action-docker:latest"
-rootLogger.debug(exec_statement)
+# rootLogger.debug(exec_statement)
 os.system(exec_statement)
