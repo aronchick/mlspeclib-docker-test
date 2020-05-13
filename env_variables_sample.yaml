@@ -1,0 +1,10 @@
+INPUT_workflow_id: '0.0.1'
+INPUT_step_name: 'process_data'
+INPUT_parameters_directory: '.parameters'
+INPUT_execution_parameters: 'execution/execution_parameters.yaml'
+INPUT_schemas_directory: 'schemas'
+INPUT_METASTORE_CREDENTIALS:
+  url: "wss://WEBSOCKETGREMLINENDPOINT.gremlin.cosmos.azure.com:443/"
+  key: "YOUR_GRAPH_DB_KEY=="
+  database_name: "DATABASE_NAME"
+  container_name: "CONTAINER_NAME"
