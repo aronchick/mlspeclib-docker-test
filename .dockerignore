@@ -15,6 +15,5 @@ src/__*
 
 #####
 !requirements.txt
-!src/*.py
-!src/*.sh
+!*.py
 !.parameters

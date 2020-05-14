@@ -3,7 +3,6 @@ import logging
 from pathlib import Path
 import yaml as YAML
 import uuid
-from io import StringIO
 import sys
 
 rootLogger = logging.getLogger()
@@ -56,6 +55,6 @@ for param in parameters:
         env_value = parameters[param]
     environment_vars += f' -e "{param}={env_value}"'
 
-exec_statement = f"docker run {environment_vars} aronchick/mlspeclib-action-docker:latest"
-# rootLogger.debug(exec_statement)
+exec_statement = f"docker run {environment_vars} aronchick/mlspeclib-action-docker-sample-extension:latest"
+rootLogger.debug(exec_statement)
 os.system(exec_statement)
